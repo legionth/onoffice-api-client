@@ -1,0 +1,19 @@
+{
+    "name": "legionth/onoffice-api-client",
+    "description": "Prototype of a an API client for the onOffice Software",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Niels Theen",
+            "email": "niels.theen@gmail.com"
+        }
+    ],
+    "require": {
+        "guzzlehttp/guzzle": "^6.5"
+    },
+    "autoload": {
+        "psr-4": {
+            "Legionth\\OnOffice\\Client\\": "src/"
+        }
+    }
+}
