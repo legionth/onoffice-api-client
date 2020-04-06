@@ -22,17 +22,18 @@ class CurlAdapter implements Adapter
         $curlVersionInfo = curl_version();
         $curlVersionNumber = $curlVersionInfo['version_number'];
 
-        $curlResource = curl_init($request->getUri());
+        $url = $request->getUri();
+        $curlResource = curl_init($url);
+
         curl_setopt($curlResource, CURLOPT_POST, true);
 
-        if (version_compare(PHP_VERSION, '5.5.0', '>=') &&
-            $curlVersionNumber >= 0x072106)
+        $version_compare = version_compare(PHP_VERSION, '5.5.0', '>=');
+        if ($version_compare && $curlVersionNumber >= 0x072106)
         {
             // empty string = all supported compressions
             curl_setopt($curlResource, CURLOPT_ACCEPT_ENCODING, '');
         }
-        elseif (version_compare(PHP_VERSION, '5.5.0', '>=') &&
-            $curlVersionNumber >= 0x071506) // 7.15.06
+        elseif ($version_compare && $curlVersionNumber >= 0x071506) // 7.15.06
         {
             curl_setopt($curlResource, CURLOPT_ENCODING, '');
         }
@@ -40,8 +41,7 @@ class CurlAdapter implements Adapter
         curl_setopt($curlResource, CURLOPT_POSTFIELDS, $request->getBody());
         curl_setopt($curlResource, CURLOPT_RETURNTRANSFER, true);
 
-        foreach ($this->curlOptions as $option => $value)
-        {
+        foreach ($this->curlOptions as $option => $value) {
             curl_setopt($curlResource, $option, $value);
         }
 
@@ -53,6 +53,8 @@ class CurlAdapter implements Adapter
             $pException = new \Exception($info);
             throw $pException;
         }
+
+        var_dump($result);
 
         return $result;
     }

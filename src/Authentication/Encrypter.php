@@ -1,29 +1,29 @@
 <?php
 
 
+namespace Legionth\OnOffice\Client\Authentication;
+
 use Legionth\OnOffice\Client\Http\Io\Request;
 
 class Encrypter
 {
     public function createHmac(Request $request)
     {
-        $body = $request->getBody();
-        $decodedBody = json_decode($body);
-        // in alphabetical order
         $fields['accesstoken'] = $request->getApiToken();
-        $fields['actionid'] = $decodedBody['actionId'];
-        $fields['identifier'] = $decodedBody['identifier'];
-        $fields['resourceid'] = $decodedBody['resourceId'];
+        $fields['actionid'] = $request->getActionId();
+        $fields['identifier'] = $request->getIdentifier();
+        $fields['resourceid'] = $request->getResourceId();
         $fields['secret'] = $request->getApiSecret();
-        $fields['timestamp'] = $decodedBody['timestamp'];
-        $fields['type'] = $decodedBody['type'];
+        $fields['timestamp'] = $request->getTimestamp();
+        $fields['type'] = $request->getResourceType();
 
-        ksort($parameters);
+        ksort($fields);
 
-        $parametersBundled = json_encode($parameters);
+        $parametersBundled = json_encode($fields);
         $fieldsBundled = implode(',', $fields);
         $allParams = $parametersBundled . ',' . $fieldsBundled;
         $hmac = md5($request->getApiSecret() . md5($allParams));
 
-        return $hmac;    }
+        return $hmac;
+    }
 }
