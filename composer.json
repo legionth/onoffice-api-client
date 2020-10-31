@@ -17,5 +17,8 @@
         "psr-4": {
             "Legionth\\OnOffice\\Client\\": "src/"
         }
+    },
+    "require-dev": {
+        "phpunit/phpunit": "^8"
     }
 }

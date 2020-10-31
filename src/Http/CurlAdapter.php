@@ -3,7 +3,7 @@
 namespace Legionth\OnOffice\Client\Http;
 
 use Legionth\OnOffice\Client\Http\Io\Request;
-use Legionth\OnOffice\Client\Http\Io\Response;
+use Psr\Http\Message\ResponseInterface;
 
 class CurlAdapter implements Adapter
 {
@@ -17,7 +17,7 @@ class CurlAdapter implements Adapter
         $this->curlOptions = $curlOptions;
     }
 
-    public function send(Request $request): Response
+    public function send(Request $request): ResponseInterface
     {
         $curlVersionInfo = curl_version();
         $curlVersionNumber = $curlVersionInfo['version_number'];

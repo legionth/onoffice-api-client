@@ -6,8 +6,7 @@ use Legionth\OnOffice\Client\Authentication\Encrypter;
 use Legionth\OnOffice\Client\Http\Adapter;
 use Legionth\OnOffice\Client\Http\CurlAdapter;
 use Legionth\OnOffice\Client\Http\Io\Request;
-use Legionth\OnOffice\Client\Http\Io\Response;
-use function GuzzleHttp\Psr7\copy_to_stream;
+use Psr\Http\Message\ResponseInterface;
 use function GuzzleHttp\Psr7\stream_for;
 
 class Client
@@ -34,7 +33,7 @@ class Client
         $this->encrypter = $encrypter;
     }
 
-    public function send(Request $request) : Response
+    public function send(Request $request) : ResponseInterface
     {
         $hmac = $this->encrypter->createHmac($request);
 
