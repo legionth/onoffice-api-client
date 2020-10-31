@@ -46,6 +46,7 @@ class CurlAdapter implements Adapter
         }
 
         $result = curl_exec($curlResource);
+        curl_close($curlResource);
 
         if (!$result)
         {
@@ -53,8 +54,6 @@ class CurlAdapter implements Adapter
             $pException = new \Exception($info);
             throw $pException;
         }
-
-        var_dump($result);
 
         return $result;
     }
